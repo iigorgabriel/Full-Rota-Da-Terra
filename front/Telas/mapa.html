@@ -5,8 +5,8 @@
     <link href="https://fonts.googleapis.com/css?family=Arial&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Kreon&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Kotta+One&display=swap" rel="stylesheet" />
-    <link href="./css/main.css" rel="stylesheet" />
-    <title>Document</title>
+    <link href="/css/main.css" rel="stylesheet" />
+    <title>Rota da Terra</title>
 </head>
 
 <body>
@@ -14,27 +14,31 @@
         <div class="v385_28"></div>
         <div class="v386_5"></div>
         <div class="v360_28"></div>
-        <div class="v389_16"></div><span class="v385_4">Rota da Terra - Todos os direitos reservados © </span>
-        <div class="v389_14"></div><span class="v389_15">Mapa</span><span class="v360_29">ENCONTRE ALIMENTOS ORGÂNICOS
-            OU AGROECOLÓGICOS MAIS PERTO DE VOCÊ.</span>
+        <div class="v389_16"></div>
+        <span class="v385_4">Rota da Terra - Todos os direitos reservados © </span>
+        <div class="v389_14"></div>
+        <span class="v389_15">Mapa </span>
+        <span class="v360_29">ENCONTRE ALIMENTOS ORGÂNICOS OU AGROECOLÓGICOS MAIS PERTO DE VOCÊ.</span>
+        
+        <!-- Div para o Google Maps -->
+        <div id="map" style="height: 1500px; width: 100%; margin-top: 20px;"></div>
+        
         <div class="v389_20"></div>
         <div class="v389_21"></div>
-        <div class="v389_22"></div><span class="v389_26">Avenida Loureiro da Silva, 515, Cidade BaixaPorto Alegre - RS
-
-            Quarta-feira
-            Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span>
-        <div class="v389_27"></div><span class="v394_43">Avenida Loureiro da Silva, 515, Cidade BaixaPorto Alegre - RS
-
-            Quarta-feira
-            Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span><span class="v394_44">Avenida Loureiro
-            da Silva, 515, Cidade BaixaPorto Alegre - RS
-
-            Quarta-feira
-            Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span><span class="v394_45">Avenida Loureiro
-            da Silva, 515, Cidade BaixaPorto Alegre - RS
-
-            Quarta-feira
-            Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span>
+        <div class="v389_22"></div>
+        <span class="v389_26">Rua Setúbal, 1532, Boa Viagem, Recife - PE
+            <br>Terça-feira
+            <br>Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span>
+        <div class="v389_27"></div>
+        <span class="v394_43">Praça de Casa Forte, 426, Casa Forte, Recife - PE
+            <br>Sexta-feira
+            <br>Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span>
+        <span class="v394_44">Rua do Futuro, 553, Parnamirim, Recife - PE
+            <br>Sábado
+            <br>Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span>
+        <span class="v394_45">Av. João de Barros, 111, Espinheiro, Recife - PE
+            <br>Domingo
+            <br>Cereais, Frutas, Legumes e Verduras, Leguminosas entre outros.</span>
         <div class="v394_47"></div>
         <div class="v394_49"></div>
         <div class="v394_51"></div>
@@ -43,11 +47,6 @@
             <div class="v496_25">
                 <div class="v496_26"></div>
             </div>
-            <div class="v496_27"><span class="v496_28">Home</span></div>
-            <div class="v496_29"><span class="v496_30">Sobre nós</span></div>
-            <div class="v496_31"><span class="v496_32">Mapa</span></div>
-            <div class="v496_33"><span class="v496_34">Blog</span></div>
-            <div class="v496_35"><span class="v496_36">Quero ser </span></div>
         </div>
         <div class="v498_113"></div>
         <div class="v498_114"></div>
@@ -61,24 +60,21 @@
         <div class="v498_123"><span class="v498_124">(81)9 9397-0505</span>
             <div class="v498_125"></div>
         </div>
-        <div class="v498_126"><span class="v498_127">(81)9 9516-7157</span>
+        <div class="v498_126"><span class="v498_127">(81)9 9516-7157"></span>
             <div class="v498_128"></div>
         </div>
         <div class="v498_129"><span class="v498_130">contato@rotadaterra.com</span></div>
         <div class="v498_131"></div>
-        <div class="v498_132"></div><span class="v498_133">Home</span><span class="v498_134">Sobre nós</span><span
-            class="v498_135">Mapa </span><span class="v498_136">Blog</span><span class="v498_137">Quero ser</span>
+        <div class="v498_132"></div>
+        <span class="v498_133"><a href="index.html" style="text-decoration: none; color: white;">Home</a></span>
+           
         <div class="v498_138">
             <div class="v498_139"></div>
             <div class="v498_140"></div>
             <div class="v498_141"></div>
         </div>
         <div class="v498_142"></div>
-        <div class="v498_143"></div>
-        <div class="v498_144"></div>
         <div class="v498_145"></div>
-        <div class="v498_146"></div>
-        <div class="v498_147"></div>
         <div class="v509_3">
             <div class="v496_37">
                 <div class="v496_38"></div>
@@ -88,6 +84,10 @@
             <div class="v496_41"></div>
         </div>
     </div>
+    
+    <!-- Script para a API do Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYZIIkGAdcO5aNHvaU5Pi0TWyRgRZR3AU&callback=initMap" async defer></script>
+    <script src="/map.js"></script>
 </body>
 
 </html>
