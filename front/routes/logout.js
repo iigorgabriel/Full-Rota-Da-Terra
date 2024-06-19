@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 
-const url = "https://fictional-sniffle-jgr5v95wrvhqpw7-4000.app.github.dev/auth/logout"
+const url = "https://0ss2bctf-4000.brs.devtunnels.ms/auth/logout"
 
 router.get('/', (req, res) => {
     req.session.destroy((err) => {

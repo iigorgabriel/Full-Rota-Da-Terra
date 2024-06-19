@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const url = "https://n5011p3j-4000.brs.devtunnels.ms/users/"
+const url = "https://0ss2bctf-4000.brs.devtunnels.ms/users/"
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

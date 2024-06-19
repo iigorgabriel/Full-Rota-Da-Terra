@@ -95,15 +95,18 @@
             }
 
             // DELETAR UM USUÁRIO PELO ID
+            
+
             function deleteUser(id) {
+                
                 fetch("/users/" + id, {
-                    method: "DELETE"
+                method: "DELETE"
                 })
-                    .then(async (res) => { return await checkError(res) })
-                    .then((user) => {
-                        window.location.reload()
-                    })
-                    .catch((error) => { document.getElementById('error').innerText = error })
+                .then(async (res) => { return await checkError(res) })
+                .then((user) => {
+                window.location.reload()
+                })
+                .catch((error) => { document.getElementById('error').innerText = error })
             }
 
             // CHECAR ERROS NA RESPOSTA DA REQUISIÇÃO
