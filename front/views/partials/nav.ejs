@@ -1,31 +1,73 @@
-<nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">
-            <img src="/front/images/logo.png" alt="Rota da Terra">
-          </a>
-        <ul class="right hide-on-med-and-down">
-            <li><a href="/"><i class="material-icons left">home</i>Home</a></li>
-            <li><a href="/users"><i class="material-icons left">person</i>Feirante</a></li>
-            <li><a href="/pets"><i class="material-icons left">pets</i>Pets</a></li>
-            <li><a href="/login"><i class="material-icons left">login</i>Login</a></li>
-        </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Personalizado</title>
+    <!-- Importando Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Importando Google Fonts - Lobster -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <style>
+        /* Estilo para o navbar */
+        nav {
+            background-color: white; /* Cor de fundo branca */
+            color: #2E5700; /* Cor do texto */
+        }
+        /* Estilo para o texto dos links */
+        nav ul.right li a {
+            color: #2E5700 !important; /* Cor do texto */
+        }
+        /* Estilo para a animação ao passar o mouse */
+        nav ul.right li a:hover {
+            background-color: #2E5700 !important; /* Cor de fundo ao passar o mouse */
+            color: white !important; /* Cor do texto ao passar o mouse */
+        }
+        /* Estilo para o texto dos links na barra lateral */
+        #nav-mobile li a {
+            color: #2E5700 !important; /* Cor do texto */
+        }
+        /* Estilo para a animação ao passar o mouse na barra lateral */
+        #nav-mobile li a:hover {
+            background-color: #2E5700 !important; /* Cor de fundo ao passar o mouse */
+            color: white !important; /* Cor do texto ao passar o mouse */
+        }
+        /* Estilo para a fonte Lobster */
+        .brand-logo {
+            font-family: 'Lobster', cursive;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo" style="color: #2E5700;">Rota da Terra</a> <!-- Alteração para "Rota da Terra" -->
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/" style="color: #2E5700;">Home</a></li>
+                <li><a href="/users" style="color: #2E5700;">Feirante</a></li>
+                <li><a href="/pets" style="color: #2E5700;">Pets</a></li>
+                <li><a href="/login" style="color: #2E5700;">Login</a></li>
+            </ul>
+            <ul id="nav-mobile" class="sidenav">
+                <li><a href="/" style="color: #2E5700;">Home</a></li>
+                <li><a href="/users" style="color: #2E5700;">Feirante</a></li>
+                <li><a href="/pets" style="color: #2E5700;">Pets</a></li>
+                <li><a href="/login" style="color: #2E5700;">Login</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
 
-        <ul id="nav-mobile" class="sidenav">
-            <li>
-                <div class="user-view">
-                    <div class="background">
-                        <img src="https://materializecss.com/images/office.jpg">
-                    </div>
-                    <a href="#user"><img class="circle" src="https://materializecss.com/images/yuna.jpg"></a>
-                    <a href="#name"><span class="white-text name">John Doe</span></a>
-                    <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-                </div>
-            </li>
-            <li><a href="/"><i class="material-icons">home</i>Home</a></li>
-            <li><a href="/users"><i class="material-icons">person</i>Usuários</a></li>
-            <li><a href="/pets"><i class="material-icons">pets</i>Pets</a></li>
-            <li><a href="/login"><i class="material-icons left">login</i>Login</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+    <!-- Importando Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Inicialização do Sidenav -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
+        });
+    </script>
+</body>
+</html>

@@ -7,18 +7,30 @@
           <input id="username" type="text" name="username" required>
           <label for="username">Username</label>
         </div>
+        <style>
+          /* Estilo para o botão de login */
+          .custom-login-btn {
+              background-color: #2E5700; /* Cor de fundo verde */
+              color: white; /* Cor do texto branco */
+          }
+          /* Estilo para o botão de login ao passar o mouse */
+          .custom-login-btn:hover {
+              background-color: #245200; /* Cor de fundo verde escuro ao passar o mouse */
+          }
+      </style>
         <div class="input-field">
           <input id="password" type="password" name="password" required>
           <label for="password">Password</label>
         </div>
         <div class="center-align">
-          <button type="submit" class="btn waves-effect waves-light">Login</button><br>
+          <!-- Botão de login personalizado -->
+          <button type="submit" class="btn waves-effect waves-light custom-login-btn">Login</button><br>
           <%if(error){%>
-            <span>
-              <%=error.error%>
-            </span>
-            <%}%>
-        </div>
+              <span>
+                  <%=error.error%>
+              </span>
+          <%}%>
+      </div>
       </form>
     </div>
   </div>
