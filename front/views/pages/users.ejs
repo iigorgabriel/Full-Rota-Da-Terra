@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css?family=Kotta+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kreon&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Arial&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>Gestão de Feirantes</title>
     <style>
@@ -20,22 +19,24 @@
 
         .header,
         .footer {
-            background-color: #85CD33;
+            background-color: #2E5700;
             color: white;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
         }
 
         .btn-custom {
-            background-color: #85CD33;
+            background-color: #2E5700;
             color: white;
         }
 
         .btn-custom:hover {
-            background-color: #70A92A;
+            background-color: #244600;
         }
 
         .section-title {
             font-family: 'Lobster', cursive;
-            color: #85CD33;
+            color: #2E5700;
         }
 
         .section-subtitle {
@@ -48,7 +49,7 @@
         }
 
         .card {
-            border: 1px solid #85CD33;
+            border: 1px solid #2E5700;
         }
 
         .card-body {
@@ -58,12 +59,6 @@
         .main-title {
             font-size: 2rem;
             color: white;
-        }
-
-        .parceiros-section {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
         }
 
         .form-container {
@@ -78,7 +73,7 @@
         .form-container h1 {
             font-size: 1.5rem;
             margin-bottom: 20px;
-            color: #85CD33;
+            color: #2E5700;
         }
 
         .form-container label {
@@ -96,7 +91,7 @@
         }
 
         .form-container button {
-            background-color: #85CD33;
+            background-color: #2E5700;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -107,6 +102,12 @@
         .form-container button[type="reset"] {
             background-color: #6c757d;
             margin-left: 10px;
+        }
+
+        .table-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow-x: auto;
         }
 
         table {
@@ -125,21 +126,22 @@
         }
 
         th {
-            background-color: #85CD33;
+            background-color: #2E5700;
             color: white;
         }
 
         button {
-            background-color: #85CD33;
+            background-color: #2E5700;
             color: white;
             padding: 5px 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            margin: 2px 0;
         }
 
         button:hover {
-            background-color: #70A92A;
+            background-color: #244600;
         }
     </style>
 </head>
@@ -153,7 +155,7 @@
         </div>
     </div>
 
-    <div class="container form-container">
+    <div class="container my-5 form-container">
         <h1>Cadastro de Feirantes</h1>
 
         <form id="userForm">
@@ -175,28 +177,30 @@
         <span><%=error%></span>
         <%}%>
 
-        <table>
-            <thead>
-                <tr>
-                    <%for(let col of cols){%>
-                    <th><%=col%></th>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <%for(let col of cols){%>
+                        <th><%=col%></th>
+                        <%}%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for(let user of users){%>
+                    <tr>
+                        <%for(let prop in user){%>
+                        <td><%=user[prop]%></td>
+                        <%}%>
+                        <td>
+                            <button onclick="editUser('<%=user.id%>')">Editar</button>
+                            <button onclick="deleteUser('<%=user.id%>')">Deletar</button>
+                        </td>
+                    </tr>
                     <%}%>
-                </tr>
-            </thead>
-            <tbody>
-                <%for(let user of users){%>
-                <tr>
-                    <%for(let prop in user){%>
-                    <td><%=user[prop]%></td>
-                    <%}%>
-                    <td>
-                        <button onclick="editUser('<%=user.id%>')">Editar</button>
-                        <button onclick="deleteUser('<%=user.id%>')">Deletar</button>
-                    </td>
-                </tr>
-                <%}%>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="container-fluid footer py-3">
@@ -286,9 +290,9 @@
         function mountDataForm() {
             const formData = new FormData(form)
             const user = {}
-            formData.forEach((v, k) => {
-                user[k] = v
-            })
+            for (let prop of formData.entries()) {
+                user[prop[0]] = prop[1]
+            }
             return user
         }
     </script>

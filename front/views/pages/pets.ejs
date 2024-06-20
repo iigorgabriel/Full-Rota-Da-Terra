@@ -1,128 +1,306 @@
-<h1>
-    <%=title%>
-</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<form id="petForm">
-    <input required type="hidden" name="id" id="id">
-    <label for="name">Nome</label>
-    <input required name="name" id="name" type="text"><br>
-    <label for="race">Raça</label>
-    <input required name="race" id="race" type="text"><br>
-    <label for="colour">Cor</label>
-    <input required name="colour" id="colour" type="text"><br>
-    <label for="gender">Sexo</label>
-    <input required name="gender" id="gender" type="text">
-    <button type="submit">Enviar</button>
-    <button type="reset">Cancelar</button>
-</form>
-<span id="error"></span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Kotta+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kreon&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Gestão de Investidores</title>
+    <style>
+        body {
+            font-family: 'Kreon', Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
 
-<%if(error){%>
-    <span>
-        <%=JSON.stringify(error)%>
-    </span>
-    <%}%>
+        .header,
+        .footer {
+            background-color: #2E5700;
+            color: white;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+        }
 
-        <table>
-            <thead>
-                <tr>
-                    <%for(let col of cols){%>
-                        <th>
-                            <%=col%>
-                        </th>
-                        <%}%>
-                </tr>
-            </thead>
-            <tbody>
-                <%for(let pet of pets){%>
+        .btn-custom {
+            background-color: #2E5700;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #244600;
+        }
+
+        .section-title {
+            font-family: 'Lobster', cursive;
+            color: #2E5700;
+        }
+
+        .section-subtitle {
+            color: #6c757d;
+        }
+
+        .custom-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .card {
+            border: 1px solid #2E5700;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2E5700;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333333;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            background-color: #2E5700;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button[type="reset"] {
+            background-color: #6c757d;
+            margin-left: 10px;
+        }
+
+        .table-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2E5700;
+            color: white;
+        }
+
+        button {
+            background-color: #2E5700;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px 0;
+        }
+
+        button:hover {
+            background-color: #244600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid header py-3">
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="main-title">Gestão de Investidores</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5 form-container">
+        <h1>Cadastro de Investidores</h1>
+
+        <form id="petForm">
+            <input required type="hidden" name="id" id="id">
+            <label for="name">Nome</label>
+            <input required name="name" id="name" type="text"><br>
+            <label for="race">Tipo de Investimento</label>
+            <input required name="race" id="race" type="text"><br>
+            <label for="colour">Quantia Investida</label>
+            <input required name="colour" id="colour" type="text"><br>
+            <label for="gender">Nível de Risco</label>
+            <input required name="gender" id="gender" type="text">
+            <button type="submit">Enviar</button>
+            <button type="reset">Cancelar</button>
+        </form>
+        <span id="error"></span>
+
+        <%if(error){%>
+        <span><%=JSON.stringify(error)%></span>
+        <%}%>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Investimento</th>
+                        <th>Quantia</th>
+                        <th>Risco</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for(let pet of pets){%>
                     <tr>
                         <%for(let prop in pet){%>
-                            <td>
-                                <%=pet[prop]%>
-                            </td>
-                            <%}%>
-                                <td>
-                                    <button onclick="editPet('<%=pet.id%>')">Editar</button>
-                                    <button onclick="deletePet('<%=pet.id%>')">Deletar</button>
-                                </td>
+                        <td><%=pet[prop]%></td>
+                        <%}%>
+                        <td>
+                            <button onclick="editPet('<%=pet.id%>')">Editar</button>
+                            <button onclick="deletePet('<%=pet.id%>')">Deletar</button>
+                        </td>
                     </tr>
                     <%}%>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        <script>
-            const form = document.getElementById('petForm')
-            form.addEventListener("submit", (e) => {
-                e.preventDefault()
-                const pet = mountDataForm()
-                let id = pet.id
-                let METHOD = id ? 'PUT' : 'POST';
-                let URL = id ? `/pets/${id}` : '/pets';
-                createOrUpdate(pet, URL, METHOD)
+    <div class="container-fluid footer py-3">
+        <div class="row">
+            <div class="col-md-4 text-center mb-3">
+                <h5>Contato</h5>
+                <p>(81) 9 9397-0505</p>
+                <p>contato@rotadaterra.com</p>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+                <h5>Mapa do site</h5>
+                <p><a href="mapa.html" class="custom-link">Mapa</a></p>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+                <h5>Rota da Terra</h5>
+                <p>Todos os direitos reservados ©</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('petForm')
+        form.addEventListener("submit", (e) => {
+            e.preventDefault()
+            const pet = mountDataForm()
+            let id = pet.id
+            let METHOD = id ? 'PUT' : 'POST';
+            let URL = id ? `/pets/${id}` : '/pets';
+            createOrUpdate(pet, URL, METHOD)
+        })
+
+        // CRIAR OU ATUALIZAR PET
+        function createOrUpdate(pet, URL, METHOD) {
+            console.log(pet)
+            fetch(URL, {
+                method: METHOD,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(pet)
             })
+            .then(async (res) => { return await checkError(res) })
+            .then((pet) => {
+                form.reset()
+                window.location.reload()
+            })
+            .catch((error) => { document.getElementById('error').innerText = error })
+        }
 
-            // CRIAR OU ATULIZAR PET
-            function createOrUpdate(pet, URL, METHOD) {
-                console.log(pet)
-                fetch(URL, {
-                    method: METHOD,
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(pet)
-                })
-                    .then(async (res) => { return await checkError(res) })
-                    .then((pet) => {
-                        form.reset()
-                        window.location.reload()
-                    })
-                    .catch((error) => { document.getElementById('error').innerText = error })
-            }
-
-            // BUSCAR PET A SER EDITADO PELO ID E CARREGAR NOS INPUTS DO FORM
-            function editPet(id) {
+        // BUSCAR PET A SER EDITADO PELO ID E CARREGAR NOS INPUTS DO FORM
+        function editPet(id) {
             console.log(id)
-                fetch("/pets/" + id, {
-                    method: "GET"
-                })
-                    .then(async (res) => { return await checkError(res) })
-                    .then((pet) => {
-                        console.log('retornou o PET', pet)
-                        for (let prop in pet) {
-                            const input = document.querySelector(`input[name="${prop}"]`);
-                            input.value = pet[prop]
-                        }
-                    })
-                    .catch((error) => { document.getElementById('error').innerText = error })
-            }
-
-            // DELETAR UM PET PELO ID
-            function deletePet(id) {
-                fetch("/pets/" + id, {
-                    method: "DELETE"
-                })
-                    .then(async (res) => { return await checkError(res) })
-                    .then((pet) => {
-                        window.location.reload()
-                    })
-                    .catch((error) => { document.getElementById('error').innerText = JSON.stringify(error) })
-            }
-
-            // CHECAR ERROS NA RESPOSTA DA REQUISIÇÃO
-            async function checkError(res) {
-                if (!res.ok) {
-                    const err = await res.json()
-                    throw err
+            fetch("/pets/" + id, {
+                method: "GET"
+            })
+            .then(async (res) => { return await checkError(res) })
+            .then((pet) => {
+                console.log('retornou o PET', pet)
+                for (let prop in pet) {
+                    const input = document.querySelector(`input[name="${prop}"]`);
+                    input.value = pet[prop]
                 }
-                return res.json()
-            }
+            })
+            .catch((error) => { document.getElementById('error').innerText = error })
+        }
 
-            // MONTAR DADOS DO FORMULÁRIO USANDO FORMDATA
-            function mountDataForm() {
-                const formData = new FormData(form)
-                const pet = {}
-                formData.forEach((v, k) => {
-                    pet[k] = v
-                })
-                return pet
-            }
+        // DELETAR UM PET PELO ID
+        function deletePet(id) {
+            fetch("/pets/" + id, {
+                method: "DELETE"
+            })
+            .then(async (res) => { return await checkError(res) })
+            .then((pet) => {
+                window.location.reload()
+            })
+            .catch((error) => { document.getElementById('error').innerText = JSON.stringify(error) })
+        }
 
-        </script>
+        // CHECAR ERROS NA RESPOSTA DA REQUISIÇÃO
+        async function checkError(res) {
+            if (!res.ok) {
+                const err = await res.json()
+                throw err
+            }
+            return res.json()
+        }
+
+        // MONTAR DADOS DO FORMULÁRIO USANDO FORMDATA
+        function mountDataForm() {
+            const form = document.getElementById('petForm')
+            const data = new FormData(form)
+            const values = [...data.entries()]
+            let pet = {}
+            values.forEach(v => {
+                pet[v[0]] = v[1]
+            })
+            return pet;
+        }
+    </script>
+</body>
+
+</html>
