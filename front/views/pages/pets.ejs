@@ -199,6 +199,8 @@
                             <button onclick="editPet('<%=pet.id%>')">Editar</button>
                             <button onclick="deletePet('<%=pet.id%>')">Deletar</button>
                         </td>
+
+
                     </tr>
                     <%}%>
                 </tbody>
@@ -253,30 +255,20 @@
 
         // BUSCAR PET A SER EDITADO PELO ID E CARREGAR NOS INPUTS DO FORM
         function editPet(id) {
+            console.log(id)
             fetch("/pets/" + id, {
                 method: "GET"
             })
-            .then(async (res) => {
-                if (!res.ok) {
-                    throw new Error("Não foi possível obter os dados do pet.");
-                }
-                return await res.json();
-            })
+            .then(async (res) => { return await checkError(res) })
             .then((pet) => {
-                console.log('Dados do PET retornados:', pet);
-                // Atualizar os campos do formulário com os dados do pet
-                document.getElementById('id').value = pet.id;
-                document.getElementById('name').value = pet.name;
-                document.getElementById('race').value = pet.race;
-                document.getElementById('colour').value = pet.colour;
-                document.getElementById('gender').value = pet.gender;
+                console.log('retornou o PET', pet)
+                for (let prop in pet) {
+                    const input = document.querySelector(`input[name="${prop}"]`);
+                    input.value = pet[prop]
+                }
             })
-            .catch((error) => { 
-                console.error('Erro ao buscar dados do pet:', error);
-                document.getElementById('error').innerText = "Erro ao buscar dados do pet.";
-            });
+            .catch((error) => { document.getElementById('error').innerText = error })
         }
-
 
         // DELETAR UM PET PELO ID
         function deletePet(id) {
@@ -295,6 +287,8 @@
             if (!res.ok) {
                 const err = await res.json()
                 throw err
+
+
             }
             return res.json()
         }

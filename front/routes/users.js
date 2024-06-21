@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const url = "https://0ss2bctf-4000.brs.devtunnels.ms/users";
+const url = "https://ljrflw4d-4000.brs.devtunnels.ms/users";
 
 // Middleware para verificar o token
 function checkToken(req, res, next) {

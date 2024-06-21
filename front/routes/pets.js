@@ -1,132 +1,129 @@
-var express = require('express');
-var router = express.Router();
-const url = "https://0ss2bctf-4000.brs.devtunnels.ms/pets/"
+const express = require('express');
+const fetch = require('node-fetch');
+const router = express.Router();
+const url = "https://ljrflw4d-4000.brs.devtunnels.ms/pets/";
 
-/* GET pets listing. */
-router.get('/', function (req, res, next) {
-  let title = "Gestão de Pets"
-  let cols = ["Id", "Nome", "Raça", "Cor", "Sexo", "Ações"]
-  const token = req.session.token || ""
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  })
-    .then(async (res) => {
-      if (!res.ok) {
-        const err = await res.json()
-        throw err
+// Middleware para extrair o token da sessão (exemplo)
+const getTokenFromSession = (req) => {
+  return req.session.token || '';
+};
+
+// GET lista de pets
+router.get('/', async (req, res) => {
+  try {
+    const token = getTokenFromSession(req);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
-      return res.json()
-    })
-    .then((pets) => {
-      res.render('layout', { body: 'pages/pets', title, pets, cols, error: "" })
-    })
-    .catch((error) => {
-      console.log('Erro', error)
-      res.redirect('/login')
-    })
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao obter lista de pets');
+    }
+    const pets = await response.json();
+    let title = "Gestão de Pets";
+    let cols = ["Id", "Nome", "Raça", "Cor", "Sexo", "Ações"];
+    res.render('layout', { body: 'pages/pets', title, pets, cols, error: "" });
+  } catch (error) {
+    console.error('Erro ao buscar lista de pets:', error);
+    res.redirect('/login');
+  }
 });
 
-// POST new pet
-router.post("/", (req, res) => {
-  const { name, race, colour, gender } = req.body
-  const token = req.session.token || ""
-  fetch(url, {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json",
-      'Authorization': `Bearer ${token}`
+// POST cria um novo pet
+router.post("/", async (req, res) => {
+  try {
+    const { name, race, colour, gender } = req.body;
+    const token = getTokenFromSession(req);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ name, race, colour, gender })
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao criar novo pet');
+    }
+    const pet = await response.json();
+    res.send(pet);
+  } catch (error) {
+    console.error('Erro ao criar novo pet:', error);
+    res.status(500).send(error.message);
+  }
+});
 
-     },
-    body: JSON.stringify({ name, race, colour, gender })
-  }).then(async (res) => {
-    if (!res.ok) {
-      const err = await res.json()
-      throw err
+// PUT atualiza um pet pelo ID
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, race, colour, gender } = req.body;
+    const token = getTokenFromSession(req);
+    const response = await fetch(url + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ name, race, colour, gender })
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao atualizar pet');
     }
-    return res.json()
-  })
-    .then((pet) => {
-      res.send(pet)
-    })
-    .catch((error) => {
-      res.status(500).send(error)
-    })
-})
+    const updatedPet = await response.json();
+    res.send(updatedPet);
+  } catch (error) {
+    console.error('Erro ao atualizar pet:', error);
+    res.status(500).send(error.message);
+  }
+});
 
-// UPDATE pet
-router.put("/:id", (req, res) => {
-  const { id } = req.params
-  const { name, race, colour, gender } = req.body
-  fetch(url + id, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, race, colour, gender })
-  }).then(async (res) => {
-    if (!res.ok) {
-      const err = await res.json()
-      throw err
+// DELETE remove um pet pelo ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const token = getTokenFromSession(req);
+    const response = await fetch(url + id, {
+      method: "DELETE",
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao remover pet');
     }
-    return res.json()
-  })
-    .then((pet) => {
-      res.send(pet)
-    })
-    .catch((error) => {
-      res.status(500).send(error)
-    })
-})
+    const deletedPet = await response.json();
+    res.send(deletedPet);
+  } catch (error) {
+    console.error('Erro ao remover pet:', error);
+    res.status(500).send(error.message);
+  }
+});
 
-// REMOVE pet
-router.delete("/:id", (req, res) => {
-  const { id } = req.params
-  const token = req.session.token || ""
-  fetch(url + id, {
-    method: "DELETE",
-    headers: {
-      'Authorization': `Bearer ${token}`
+// GET busca um pet pelo ID
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const token = getTokenFromSession(req);
+    const response = await fetch(url + id, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao buscar pet');
     }
-  }).then(async (res) => {
-    if (!res.ok) {
-      const err = await res.json()
-      throw err
-    }
-    return res.json()
-  })
-    .then((pet) => {
-      res.send(pet)
-    })
-    .catch((error) => {
-      res.status(500).send(error)
-    })
-})
-
-// GET pet by id
-router.get("/:id", (req, res) => {
-  const { id } = req.params
-  const token = req.session.token || ""
-  fetch(url + id, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(async (res) => {
-    if (!res.ok) {
-      const err = await res.json()
-      throw err
-    }
-    return res.json()
-  })
-    .then((pet) => {
-      res.send(pet)
-    })
-    .catch((error) => {
-      res.status(500).send(error)
-    })
-})
+    const pet = await response.json();
+    res.send(pet);
+  } catch (error) {
+    console.error('Erro ao buscar pet:', error);
+    res.status(500).send(error.message);
+  }
+});
 
 module.exports = router;
